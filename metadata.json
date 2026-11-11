@@ -1,0 +1,6 @@
+{
+  "name": "Eagle Eye Security - Quotation Generator & Management System",
+  "description": "Professional quotation builder, PDF document generator, dynamic fields manager, and MySQL database exporter for Eagle Eye Security System.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
