@@ -59,17 +59,24 @@ export const QuotationList: React.FC<QuotationListProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-slate-100">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-        <div>
-          <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider mb-1">
-            <FileText className="w-4 h-4" />
-            <span>Commercial Document Archives</span>
+        <div className="flex items-center gap-3.5">
+          <img
+            src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+            alt="Eagle Eye Logo"
+            className="w-12 h-12 object-contain shrink-0 drop-shadow-md"
+          />
+          <div>
+            <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider mb-0.5">
+              <FileText className="w-3.5 h-3.5" />
+              <span>Commercial Document Archives</span>
+            </div>
+            <h1 className="text-2xl font-black text-white tracking-tight">
+              Quotation Library & Records
+            </h1>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Search, duplicate, and manage all issued security proposals
+            </p>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
-            Quotation Library & Records
-          </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Search, duplicate, and manage all issued security proposals
-          </p>
         </div>
 
         <button

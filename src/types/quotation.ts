@@ -2,7 +2,7 @@
  * Eagle Eye Security System - Quotation Type Definitions
  */
 
-export type UserRole = 'admin' | 'sales_manager' | 'estimator' | 'viewer';
+export type UserRole = 'admin' | 'administrator' | 'sales_manager' | 'estimator' | 'technical_estimator' | 'viewer';
 
 export interface User {
   id: number;
@@ -97,4 +97,5 @@ export interface CompanyProfile {
   vision: string;
   services: string[];
   qrCodeUrl: string;
+  logoUrl?: string;
 }

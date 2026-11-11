@@ -36,16 +36,36 @@ export async function exportQuotationToPdf(
   const a4WidthMm = 210;
   const a4HeightMm = 297;
 
+  // Helper with 4.5s timeout protection to prevent hanging
+  const renderCanvasWithTimeout = (el: HTMLElement): Promise<HTMLCanvasElement> => {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error('html2canvas rendering timed out'));
+      }, 4500);
+
+      html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#FFFFFF',
+        windowWidth: 794,
+        windowHeight: 1123
+      })
+        .then((canvas) => {
+          clearTimeout(timer);
+          resolve(canvas);
+        })
+        .catch((err) => {
+          clearTimeout(timer);
+          reject(err);
+        });
+    });
+  };
+
   // Render Page 1
   options?.onProgress?.(30, 'Rendering Quotation Specifications (Page 1)...');
-  const canvas1 = await html2canvas(page1Element, {
-    scale: 2, // High resolution
-    useCORS: true,
-    logging: false,
-    backgroundColor: '#FFFFFF',
-    windowWidth: page1Element.scrollWidth,
-    windowHeight: page1Element.scrollHeight
-  });
+  const canvas1 = await renderCanvasWithTimeout(page1Element);
 
   const imgData1 = canvas1.toDataURL('image/jpeg', 0.98);
   pdf.addImage(imgData1, 'JPEG', 0, 0, a4WidthMm, a4HeightMm, undefined, 'FAST');
@@ -55,15 +75,7 @@ export async function exportQuotationToPdf(
     options?.onProgress?.(70, 'Rendering Terms & Conditions (Page 2)...');
     pdf.addPage('a4', 'portrait');
 
-    const canvas2 = await html2canvas(page2Element, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      backgroundColor: '#FFFFFF',
-      windowWidth: page2Element.scrollWidth,
-      windowHeight: page2Element.scrollHeight
-    });
-
+    const canvas2 = await renderCanvasWithTimeout(page2Element);
     const imgData2 = canvas2.toDataURL('image/jpeg', 0.98);
     pdf.addImage(imgData2, 'JPEG', 0, 0, a4WidthMm, a4HeightMm, undefined, 'FAST');
   }

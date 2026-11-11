@@ -36,8 +36,9 @@ export const TopNav: React.FC<TopNavProps> = ({
           <EagleEyeLogo size="sm" showText={true} theme="dark" />
         </div>
 
-        {/* Zone 2: Navigation Links (Single-line, 4-5 links) */}
+        {/* Zone 2: Navigation Links (Strict Role-Based Permissions) */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          {/* Quotation Editor: Accessible by all roles */}
           <button
             type="button"
             onClick={() => setActiveTab('editor')}
@@ -50,6 +51,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             Quotation Editor
           </button>
 
+          {/* Document Preview: Accessible by all roles */}
           <button
             type="button"
             onClick={() => setActiveTab('preview')}
@@ -62,30 +64,36 @@ export const TopNav: React.FC<TopNavProps> = ({
             Document Preview
           </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('history')}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer ${
-              activeTab === 'history'
-                ? 'text-amber-400 font-semibold border-b-2 border-amber-400'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            Quote Archives
-          </button>
+          {/* Quote Archives: Admin and Sales Manager ONLY (Hidden for Technical Estimator) */}
+          {(user.role === 'admin' || user.role === 'administrator' || user.role === 'sales_manager') && (
+            <button
+              type="button"
+              onClick={() => setActiveTab('history')}
+              className={`transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer ${
+                activeTab === 'history'
+                  ? 'text-amber-400 font-semibold border-b-2 border-amber-400'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Quote Archives
+            </button>
+          )}
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('database')}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'database'
-                ? 'text-amber-400 font-semibold border-b-2 border-amber-400'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>MySQL & PHP</span>
-          </button>
+          {/* MySQL & PHP Database: Administrator ONLY (Strictly hidden for Sales Manager & Technical Estimator) */}
+          {(user.role === 'admin' || user.role === 'administrator') && (
+            <button
+              type="button"
+              onClick={() => setActiveTab('database')}
+              className={`transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'database'
+                  ? 'text-amber-400 font-semibold border-b-2 border-amber-400'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Database className="w-3.5 h-3.5" />
+              <span>MySQL & PHP</span>
+            </button>
+          )}
         </nav>
 
         {/* Zone 3: Primary Action & Profile Area */}

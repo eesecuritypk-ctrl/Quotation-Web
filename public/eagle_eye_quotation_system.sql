@@ -45,7 +45,7 @@ CREATE TABLE `company_profile` (
   `mission` TEXT,
   `vision` TEXT,
   `services` TEXT,
-  `logo_path` VARCHAR(255) DEFAULT '/assets/logo.png',
+  `logo_path` VARCHAR(255) DEFAULT '/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png',
   `qr_code_url` VARCHAR(255) DEFAULT 'https://www.eesecurity.com.pk',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -154,7 +154,7 @@ INSERT INTO `company_profile` (`id`, `company_name`, `tagline`, `address`, `emai
  'To deliver advanced security solution that protect people, property, and peace of mind.', 
  'To be a leading security solution provide, renowned for innovation, reliability, and customer trust.', 
  'Electric Fance System, CCTV Solutions, DVR / NVR Solution, Smart Security Solutions, Installation & Maintenance.', 
- '/assets/logo.png', 
+ '/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png', 
  'https://www.eesecurity.com.pk');
 
 -- Seed Sample Quotation (Quote 00511 from PDF)

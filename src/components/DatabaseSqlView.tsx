@@ -14,7 +14,7 @@ interface DatabaseSqlViewProps {
 }
 
 export const DatabaseSqlView: React.FC<DatabaseSqlViewProps> = ({ currentQuotation }) => {
-  const [activeTab, setActiveTab] = useState<'schema' | 'current_quote' | 'php' | 'query'>('schema');
+  const [activeTab, setActiveTab] = useState<'wamp' | 'schema' | 'current_quote' | 'php' | 'query'>('wamp');
   const [copied, setCopied] = useState(false);
   const [queryInput, setQueryInput] = useState('SELECT quote_number, client_name, client_location, total_amount, status FROM quotations;');
   const [queryOutput, setQueryOutput] = useState<any[] | null>(null);
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS \`company_profile\` (
   \`mission\` TEXT,
   \`vision\` TEXT,
   \`services\` TEXT,
-  \`logo_path\` VARCHAR(255) DEFAULT '/assets/logo.png',
+  \`logo_path\` VARCHAR(255) DEFAULT '/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png',
   \`qr_code_url\` VARCHAR(255) DEFAULT 'https://www.eesecurity.com.pk',
   \`created_at\` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -236,38 +236,67 @@ if ($method === 'GET') {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-slate-100">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-        <div>
-          <div className="flex items-center gap-2.5 text-amber-500 font-bold text-xs uppercase tracking-wider mb-1">
-            <Database className="w-4 h-4" />
-            <span>MySQL Database & PHP Backend Architecture</span>
+        <div className="flex items-center gap-3.5">
+          <img
+            src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+            alt="Eagle Eye Logo"
+            className="w-12 h-12 object-contain shrink-0 drop-shadow-md"
+          />
+          <div>
+            <div className="flex items-center gap-2.5 text-amber-500 font-bold text-xs uppercase tracking-wider mb-0.5">
+              <Database className="w-4 h-4" />
+              <span>MySQL Database & PHP Backend Architecture</span>
+            </div>
+            <h1 className="text-2xl font-black text-white tracking-tight">
+              Database Schema & Backend API Center
+            </h1>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Import the generated .sql schema into phpMyAdmin or MySQL to host persistent data with PHP.
+            </p>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
-            Database Schema & Backend API Center
-          </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Import the generated .sql schema into phpMyAdmin or MySQL to host persistent data with PHP.
-          </p>
         </div>
 
-        {/* 1-Click Download Button */}
-        <div className="flex items-center gap-3">
+        {/* Download Buttons */}
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <a
+            href="/eesi_wamp_deployment.zip"
+            download="eesi_wamp_deployment.zip"
+            className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold rounded-lg text-xs shadow-md shadow-amber-500/20 transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <Download className="w-4 h-4" />
+            <span>Download WAMP Package (.zip)</span>
+          </a>
+
           <button
             type="button"
             onClick={handleDownloadSqlFile}
-            className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-xs shadow-md shadow-amber-500/20 transition-all flex items-center gap-2 cursor-pointer"
+            className="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold rounded-lg text-xs transition-all flex items-center gap-2 cursor-pointer"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-3.5 h-3.5" />
             <span>Download .sql File</span>
           </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 mt-6 border-b border-slate-800 pb-2">
+      <div className="flex items-center gap-2 mt-6 border-b border-slate-800 pb-2 overflow-x-auto">
+        <button
+          type="button"
+          onClick={() => setActiveTab('wamp' as any)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+            (activeTab as any) === 'wamp'
+              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
+          <Server className="w-3.5 h-3.5" />
+          <span>WAMP & XAMPP Deployment Guide</span>
+        </button>
+
         <button
           type="button"
           onClick={() => setActiveTab('schema')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'schema'
               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
               : 'text-slate-400 hover:text-white'
@@ -280,7 +309,7 @@ if ($method === 'GET') {
         <button
           type="button"
           onClick={() => setActiveTab('current_quote')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'current_quote'
               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
               : 'text-slate-400 hover:text-white'
@@ -293,7 +322,7 @@ if ($method === 'GET') {
         <button
           type="button"
           onClick={() => setActiveTab('php')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
             activeTab === 'php'
               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
               : 'text-slate-400 hover:text-white'
@@ -319,6 +348,140 @@ if ($method === 'GET') {
 
       {/* Tab Contents */}
       <div className="mt-6">
+        {activeTab === 'wamp' && (
+          <div className="space-y-6">
+            {/* Alert Banner Explaining the Blank Page Cause */}
+            <div className="bg-amber-500/10 border border-amber-500/40 rounded-xl p-5">
+              <div className="flex items-start gap-3.5">
+                <div className="p-2 bg-amber-500/20 text-amber-400 rounded-lg shrink-0 mt-0.5">
+                  <Server className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">
+                    Why was the page blank at <code className="bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">http://localhost/eesi/</code>?
+                  </h3>
+                  <div className="text-xs text-slate-300 mt-2 space-y-1.5 leading-relaxed">
+                    <p>
+                      <strong>1. Subdirectory Base Path:</strong> Apache subdirectories (e.g., <code className="text-amber-400">/eesi/</code>) require relative asset links (<code className="text-amber-400">./assets/...</code> instead of <code className="text-amber-400">/assets/...</code>). When using absolute paths, the browser tries to find files at <code className="text-rose-300">localhost/assets/</code> instead of <code className="text-emerald-300">localhost/eesi/assets/</code>, returning 404s and a blank screen. We have fixed this with <code className="text-amber-300">base: './'</code>!
+                    </p>
+                    <p>
+                      <strong>2. Production Build Required:</strong> Web browsers cannot execute raw React <code className="text-amber-400">.tsx</code> source code directly through Apache. WAMP needs the compiled production files (from the <code className="text-amber-400">dist/</code> folder).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick 1-Click Deployment Download */}
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <span>Pre-Packaged WAMP Release</span>
+                  <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-mono font-bold">
+                    Ready to Unzip
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-1 max-w-xl">
+                  Contains pre-compiled HTML, CSS, JavaScript, Logo asset, PHP REST endpoints, and the MySQL database schema ready to extract directly into your WAMP <code className="text-slate-300">www/eesi/</code> folder.
+                </p>
+              </div>
+
+              <a
+                href="/eesi_wamp_deployment.zip"
+                download="eesi_wamp_deployment.zip"
+                className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-lg text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download eesi_wamp_deployment.zip</span>
+              </a>
+            </div>
+
+            {/* Step-by-Step Instructions */}
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 pb-2 border-b border-slate-800">
+                Step-by-Step Installation for WAMP / XAMPP (Under 2 Minutes)
+              </h3>
+
+              <div className="space-y-4 text-xs">
+                {/* Step 1 */}
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center shrink-0 text-xs">
+                    1
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-white text-sm">Download and Extract Files</h4>
+                    <p className="text-slate-400 mt-0.5">
+                      Download <strong className="text-amber-400">eesi_wamp_deployment.zip</strong> above, open your WAMP directory:
+                    </p>
+                    <div className="mt-1.5 p-2.5 bg-slate-950 font-mono text-slate-300 rounded border border-slate-800 select-all">
+                      C:\wamp64\www\eesi\
+                    </div>
+                    <p className="text-slate-400 mt-1 text-[11px]">
+                      (If using XAMPP: <code className="text-slate-300">C:\xampp\htdocs\eesi\</code>)
+                    </p>
+                    <p className="text-slate-400 mt-1">
+                      Extract all contents so <code className="text-amber-300">index.html</code> is directly inside <code className="text-amber-300">C:\wamp64\www\eesi\index.html</code>.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="flex items-start gap-3 pt-3 border-t border-slate-800">
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center shrink-0 text-xs">
+                    2
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-white text-sm">Import Database into MySQL (phpMyAdmin)</h4>
+                    <p className="text-slate-400 mt-0.5">
+                      Open your browser and navigate to <strong className="text-amber-400">http://localhost/phpmyadmin/</strong>:
+                    </p>
+                    <ul className="list-disc list-inside text-slate-300 mt-1.5 space-y-1">
+                      <li>Click <strong>Import</strong> tab at the top.</li>
+                      <li>Choose file <code className="text-amber-400">eagle_eye_quotation_system.sql</code> from inside your <code className="text-slate-300">eesi/</code> folder.</li>
+                      <li>Click <strong>Go</strong>. It automatically creates database <code className="text-amber-300">eagle_eye_db</code>, all tables, and seed quote 00511!</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="flex items-start gap-3 pt-3 border-t border-slate-800">
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center shrink-0 text-xs">
+                    3
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-white text-sm">Verify Database Credentials in PHP</h4>
+                    <p className="text-slate-400 mt-0.5">
+                      Check <code className="text-amber-400">C:\wamp64\www\eesi\config\db.php</code>:
+                    </p>
+                    <div className="mt-1.5 p-2 bg-slate-950 font-mono text-[11px] text-slate-300 rounded border border-slate-800">
+                      $db_host = 'localhost';<br/>
+                      $db_name = 'eagle_eye_db';<br/>
+                      $db_user = 'root'; // default WAMP user<br/>
+                      $db_pass = '';     // default WAMP password is empty
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 4 */}
+                <div className="flex items-start gap-3 pt-3 border-t border-slate-800">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center shrink-0 text-xs">
+                    4
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-white text-sm">Open in Browser</h4>
+                    <p className="text-slate-400 mt-0.5">
+                      Go to <a href="http://localhost/eesi/" target="_blank" rel="noreferrer" className="text-amber-400 font-bold underline">http://localhost/eesi/</a>.
+                    </p>
+                    <p className="text-emerald-400 font-medium mt-1">
+                      The portal loads immediately with the interactive login, Eagle Eye branding, dynamic fields, and PDF exporter!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'schema' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between bg-slate-900/90 px-4 py-2.5 rounded-t-xl border border-slate-800">

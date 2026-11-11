@@ -25,15 +25,8 @@ const STORAGE_KEY_QUOTES = 'eagle_eye_quotations_v1';
 const STORAGE_KEY_USER = 'eagle_eye_active_user_v1';
 
 export default function App() {
-  // Authentication State
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY_USER);
-      return saved ? JSON.parse(saved) : DEMO_USERS[0];
-    } catch {
-      return DEMO_USERS[0];
-    }
-  });
+  // Authentication State: First page MUST be login page
+  const [user, setUser] = useState<User | null>(null);
 
   // Quotations List State
   const [quotations, setQuotations] = useState<Quotation[]>(() => {
@@ -164,24 +157,63 @@ export default function App() {
     }
   };
 
-  // Export PDF Handler
+  // Role-based menu access protection
+  useEffect(() => {
+    if (!user) return;
+    const isEstimator = user.role === 'estimator' || user.role === 'technical_estimator';
+    const isSales = user.role === 'sales_manager';
+
+    if (isEstimator && (activeTab === 'database' || activeTab === 'history')) {
+      setActiveTab('editor');
+    } else if (isSales && activeTab === 'database') {
+      setActiveTab('editor');
+    }
+  }, [user, activeTab]);
+
+  // Export PDF Handler (Guaranteed non-hanging with tab check & timeout guard)
   const handleExportPdf = async () => {
+    if (isExportingPdf) return;
+
+    // Ensure DOM is on preview tab so elements are mounted
+    if (activeTab !== 'preview') {
+      setActiveTab('preview');
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
     setIsExportingPdf(true);
     showToast('Generating high-resolution A4 PDF document...');
 
+    let finished = false;
+    const safetyTimer = setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        setIsExportingPdf(false);
+        showToast('Opening native high-resolution A4 print dialog...');
+        window.print();
+      }
+    }, 4500);
+
     try {
       await exportQuotationToPdf(activeQuote, {
-        fileName: `EagleEye_Quotation_${activeQuote.quoteNumber}.pdf`,
-        onProgress: (p, stage) => {
-          if (p === 100) {
+        fileName: `EagleEye_Quotation_${activeQuote.quoteNumber || '00511'}.pdf`,
+        onProgress: (p) => {
+          if (p === 100 && !finished) {
+            finished = true;
+            clearTimeout(safetyTimer);
             showToast('PDF downloaded successfully!');
           }
         }
       });
     } catch (err) {
-      console.error('PDF generation error:', err);
-      showToast('Browser PDF direct download complete');
+      console.error('PDF generation error, opening print fallback:', err);
+      if (!finished) {
+        finished = true;
+        clearTimeout(safetyTimer);
+        showToast('Opening native A4 print dialog...');
+        window.print();
+      }
     } finally {
+      if (!finished) clearTimeout(safetyTimer);
       setIsExportingPdf(false);
     }
   };
@@ -191,7 +223,13 @@ export default function App() {
     window.print();
   };
 
-  // If user is not logged in, show the interactive login page
+  // Logout handler returning to login page
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem(STORAGE_KEY_USER);
+  };
+
+  // If user is not logged in, first page MUST be the interactive login page
   if (!user) {
     return <LoginPage onLoginSuccess={setUser} />;
   }
@@ -367,7 +405,12 @@ export default function App() {
       {/* Footer Branding Bar */}
       <footer className="no-print bg-slate-950 border-t border-slate-900 py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+              alt="Eagle Eye Logo"
+              className="w-6 h-6 object-contain"
+            />
             <span className="font-bold text-slate-400">EAGLE EYE SECURITY SYSTEM</span>
             <span>·</span>
             <span>Plot No L161 Sector 48/E Korangi 2½ Karachi</span>

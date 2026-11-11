@@ -81,14 +81,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         {/* Brand Header */}
         <div className="text-center flex flex-col items-center">
-          <div className="p-3 bg-slate-900/90 rounded-2xl border border-amber-500/30 shadow-2xl backdrop-blur-md mb-4">
-            <EagleEyeLogo size="lg" showText={true} theme="dark" />
+          <div className="p-4 bg-slate-900/95 rounded-2xl border border-amber-500/30 shadow-2xl backdrop-blur-md mb-3 flex flex-col items-center">
+            <img
+              src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+              alt="Eagle Eye Security Systems"
+              className="w-28 h-28 object-contain drop-shadow-xl"
+              referrerPolicy="no-referrer"
+            />
           </div>
           <h1 className="text-xl font-black tracking-tight text-white mt-1">
             Quotation Management Portal
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-xs">
-            Generate, sign, and export official commercial quotations with MySQL synchronization
+            Official Eagle Eye Security Systems commercial estimation & billing console
           </p>
         </div>
 

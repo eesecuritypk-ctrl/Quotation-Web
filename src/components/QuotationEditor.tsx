@@ -150,17 +150,24 @@ export const QuotationEditor: React.FC<QuotationEditorProps> = ({
 
       {/* Editor Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-        <div>
-          <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider mb-1">
-            <SlidersHorizontal className="w-4 h-4" />
-            <span>Interactive Quotation Builder</span>
+        <div className="flex items-center gap-3.5">
+          <img
+            src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+            alt="Eagle Eye Security Systems"
+            className="w-12 h-12 object-contain shrink-0 drop-shadow-md"
+          />
+          <div>
+            <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider mb-0.5">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Interactive Quotation Builder</span>
+            </div>
+            <h1 className="text-2xl font-black text-white tracking-tight">
+              Quotation #{quotation.quoteNumber}
+            </h1>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Edit parameters, dynamically add specifications, and calibrate commercial totals
+            </p>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
-            Quotation #{quotation.quoteNumber}
-          </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Edit parameters, dynamically add specifications, and calibrate commercial totals
-          </p>
         </div>
 
         {/* Quick Toolbar */}

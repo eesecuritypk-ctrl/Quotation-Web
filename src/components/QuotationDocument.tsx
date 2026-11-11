@@ -169,12 +169,15 @@ export const QuotationDocument: React.FC<QuotationDocumentProps> = ({
     </footer>
   );
 
-  // Background Watermark Shield
+  // Background Watermark Shield with the uploaded official logo
   const renderWatermark = () => (
-    <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.045] select-none overflow-hidden">
-      <div className="transform scale-[2.4] rotate-[-5deg]">
-        <EagleEyeLogo size="xl" showText={true} theme="light" />
-      </div>
+    <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.06] select-none overflow-hidden z-0">
+      <img
+        src="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png"
+        alt="Eagle Eye Security Systems Watermark"
+        className="w-[450px] h-[450px] object-contain filter grayscale contrast-125"
+        referrerPolicy="no-referrer"
+      />
     </div>
   );
 
@@ -189,7 +192,8 @@ export const QuotationDocument: React.FC<QuotationDocumentProps> = ({
           className="print-sheet relative bg-white text-slate-900 shadow-xl overflow-hidden flex flex-col justify-between"
           style={{
             width: '210mm',
-            minHeight: '297mm',
+            height: '297mm',
+            maxHeight: '297mm',
             boxSizing: 'border-box'
           }}
         >
@@ -406,7 +410,8 @@ export const QuotationDocument: React.FC<QuotationDocumentProps> = ({
           className="print-sheet relative bg-white text-slate-900 shadow-xl overflow-hidden flex flex-col justify-between"
           style={{
             width: '210mm',
-            minHeight: '297mm',
+            height: '297mm',
+            maxHeight: '297mm',
             boxSizing: 'border-box'
           }}
         >

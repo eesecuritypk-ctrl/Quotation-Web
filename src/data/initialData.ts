@@ -21,7 +21,8 @@ export const INITIAL_COMPANY_PROFILE: CompanyProfile = {
     'Smart Security Solutions',
     'Installation & Maintenance.'
   ],
-  qrCodeUrl: 'https://www.eesecurity.com.pk'
+  qrCodeUrl: 'https://www.eesecurity.com.pk',
+  logoUrl: '/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png'
 };
 
 export const INITIAL_QUOTATION: Quotation = {

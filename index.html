@@ -8,13 +8,27 @@
     <meta property="og:title" content="Eagle Eye Security - Quotation Generator & Management System" />
     <meta property="og:description" content="Professional quotation builder, PDF document generator, dynamic fields manager, and MySQL database exporter for Eagle Eye Security System." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png" />
+    <link rel="icon" type="image/png" href="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png" />
+    <link rel="apple-touch-icon" href="/assets/aistudio/Eagle_Eye_Security_Systems_Logo_cbbbecb6.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   </head>
   <body class="bg-slate-900 text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200">
     <div id="root"></div>
+    <script>
+      // If loaded under Apache/WAMP/XAMPP/cPanel (port 80, 443, or standard non-dev server)
+      if (typeof window !== 'undefined') {
+        var port = window.location.port;
+        if (port !== '3000' && port !== '5173' && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+          // Instantly redirect to index.php so Apache never gets stuck on uncompiled TSX
+          window.location.replace('index.php' + window.location.search + window.location.hash);
+        }
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
